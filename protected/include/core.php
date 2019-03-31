@@ -1,7 +1,8 @@
 <?php
 define('VIEW_DIR', APP_DIR.DS.'protected'.DS.'view');
 $GLOBALS = require(APP_DIR.DS.'protected'.DS.'config.php');
-$GLOBALS['cfg'] = require(APP_DIR.DS.'protected'.DS.'cache'.DS.'setting.php');
+$serverHost = explode('.', $_SERVER['HTTP_HOST']);
+$GLOBALS['cfg'] = require(APP_DIR.DS.'protected'.DS.'cache'.DS.'setting_'.$serverHost[1].'.php');
 if($GLOBALS['cfg']['debug']) {
     error_reporting(-1);
     ini_set('display_errors', 'On');
@@ -135,7 +136,7 @@ function url($c = 'main', $a = 'index', $param = array()) {
                     }
 					
                     if(0 !== stripos($urlArray[$url], $GLOBALS['http_scheme'])) {
-                        $urlArray[$url] = $GLOBALS['http_scheme'].$_SERVER['HTTP_HOST'].rtrim(dirname($_SERVER["SCRIPT_NAME"]), '/\\') .'/'.$urlArray[$url];
+                        $urlArray[$url] = rtrim(dirname($_SERVER["SCRIPT_NAME"]), '/\\') .'/'.$urlArray[$url];
                     }
                     $rule = str_ireplace(array('<m>', '<c>', '<a>'), '', $rule);
                     if(count($param) == preg_match_all('/<\w+>/is', $rule, $_match)) return $urlArray[$url];

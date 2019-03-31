@@ -1,39 +1,34 @@
 <?php
 function layout_topper($params = array())
 {
-    if($html = layout::instance()->check_static_file('topper.html')) return $html;
     $nav = vcache::instance()->nav_model('get_site_nav');
     $assigns['nav'] = $nav['top'];
     $assigns = $assigns + $params;
-    return  layout::instance()->tpl_render('topper.html', $assigns, TRUE);
+    return  layout::instance()->tpl_render('topper.html', $assigns);
 }
 
 function layout_header($params = array())
 {
-    if($html = layout::instance()->check_static_file('header.html')) return $html;
     $nav = vcache::instance()->nav_model('get_site_nav');
     $assigns['nav'] = $nav['main'];
     $assigns['hot_searches'] = explode(',', $GLOBALS['cfg']['goods_hot_searches']);
     $assigns = $assigns + $params;
-    return layout::instance()->tpl_render('header.html', $assigns, TRUE);
+    return layout::instance()->tpl_render('header.html', $assigns);
 }
 
 function layout_helper()
 {
-    if($html = layout::instance()->check_static_file('helper.html')) return $html;
     $assigns['helper_list'] = vcache::instance()->help_model('cated_help_list');
-    return layout::instance()->tpl_render('helper.html', $assigns, TRUE);
+    return layout::instance()->tpl_render('helper.html', $assigns);
 }
 
 function layout_footer()
 {
-    if($html = layout::instance()->check_static_file('footer.html')) return $html;
     $nav = vcache::instance()->nav_model('get_site_nav');
     $assigns['nav'] = $nav['bottom'];
     $assigns['footer'] = $GLOBALS['cfg']['footer_info'];
-    $assigns['footer'] .= base64_decode('PHAgc3R5bGU9ImZvbnQtc2l6ZToxMnB4O2NvbG9yOiM5OTk7dGV4dC1hbGlnbjpjZW50ZXI7bWFyZ2luOjE1cHggMDsiPlBvd2VyZWQgYnkgPGEgdGFyZ2V0PSJfYmxhbmsiIGhyZWY9Imh0dHA6Ly93d3cudmVyeWRvd3MuY29tIj5WZXJ5ZG93czwvYT48L3A+');
     if(!empty($GLOBALS['cfg']['visitor_stats'])) $assigns['footer'] .= "<script type=\"text/javascript\" src=\"{$GLOBALS['cfg']['http_host']}/public/script/stats.js\"></script>";
-    return layout::instance()->tpl_render('footer.html', $assigns, TRUE);
+    return layout::instance()->tpl_render('footer.html', $assigns);
 }
 
 function layout_catebar()

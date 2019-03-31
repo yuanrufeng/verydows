@@ -25,8 +25,10 @@ class setting_model extends Model
     public function update_config()
     {
         $config = $this->get_config();
+        $config['http_host'] = '';
+        $serverHost = explode('.', $_SERVER['HTTP_HOST']);
         $codes = "<?php \nreturn ".var_export($config, TRUE).";";
-        return file_put_contents(APP_DIR.DS.'protected'.DS.'cache'.DS.'setting.php', $codes);
+        return file_put_contents(APP_DIR.DS.'protected'.DS.'cache'.DS.'setting_'.$serverHost[1].'.php', $codes);
     }
     
     /**

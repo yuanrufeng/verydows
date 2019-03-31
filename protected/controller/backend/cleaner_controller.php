@@ -33,7 +33,6 @@ class cleaner_controller extends general_controller
         {
             case 'data': 
                 
-               if(!vcache::instance()->flush()) $error = '清理数据缓存失败';
             
             break;
             
